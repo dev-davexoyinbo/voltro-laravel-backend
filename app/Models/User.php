@@ -58,4 +58,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-}
+
+    public function cards(){
+        return $this->hasMany(Card::class);
+    }//end method cards
+
+    public function getNameAttribute(){
+        return $this->first_name . " " . $this->last_name;
+    }
+}//end class User

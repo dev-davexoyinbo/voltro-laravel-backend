@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Card extends Model
 {
     use HasFactory;
-}
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }//end method user
+}//end class Card
