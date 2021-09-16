@@ -43,18 +43,6 @@ class AuthenticationService
         } catch (UserServiceException $e) {
             throw new AuthenticationServiceException(UserServiceException::class . ": {$e->getMessage()}", $e->getCode());
         }
-
-        $roleQuery = Role::where("name", "USER");
-
-        if (isset($data["_role"]) && $data["_role"]) {
-            $roleQuery->orWhere("name", $data["_role"]);
-        }
-
-        $roleIds = $roleQuery->pluck("id")->toArray();
-
-        // give every registered user a role of USER
-        $user->roles()->sync($roleIds ?? []);
-
         $this->user = $user;
         return $this;
     } //end method registerUser

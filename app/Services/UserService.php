@@ -49,7 +49,7 @@ class UserService
     {
         // exclude some columns because they are not nmecessarily strings
         // or the data might be handled differently
-        $excludeDataColumns = ["password", "profile_photo"];
+        $excludeDataColumns = ["password"];
 
         $excludeDataColumns = array_merge($excludeDataColumns, $excludeColumns);
 
@@ -80,11 +80,6 @@ class UserService
             $user->password = Hash::make($data["password"]);
         }
 
-        // TODO: complete the logic for the profile photo
-        if ($data["profile_photo"] && request()->file("profile_photo")) {
-            $user->profile_photo = $this->handleProfilePhoto($user->profile_photo);
-        }
-
         $this->user($user);
         return $this;
     } //end method updateOrCreateUser
@@ -95,33 +90,4 @@ class UserService
         return $this;
     } //end method save
 
-
-    // ===========================================
-    // PRIVATE METHODS
-    // ===========================================
-    private function handleProfilePhoto($previousUrl): string
-    {
-        $deletePath = "";
-
-        // if user has profile photo, save the path
-        if ($previousUrl) {
-            $deletePath = preg_replace("/^\/storage/", "", $previousUrl);
-        }
-
-
-        $filePath = Storage::url(
-            Storage::disk("public")
-                ->put(
-                    "profile_photos",
-                    request()->file("profile_photo")
-                )
-        );
-
-        // File storage successful: delete previous profile photo
-        if ($deletePath || $deletePath != "") {
-            Storage::disk("public")->delete($deletePath);
-        }
-
-        return $filePath;
-    } //end method handleProfilePhoto
 }//end class UserService

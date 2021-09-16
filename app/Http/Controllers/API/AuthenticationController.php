@@ -38,27 +38,11 @@ class AuthenticationController extends Controller
         // To add a role to a user add the field
         // "_role" to the request
         $request->validate([
-            "_role" => "string", // to attach user to a role
+            "first_name" => "required",
+            "last_name" => "required",
+            "phone_number" => "required",
             "email" => "required|email",
             "password" => "required|string",
-            "name" => "required|string",
-            "title" => "required|string",
-            "phone_number" => "required|string",
-            "address" => "required|string",
-            "address_2" => "string",
-            "city" => "required|string",
-            "state" => "required|string",
-            "country" => "required|string",
-            "zip_code" => "required|string",
-            "about" => "required|string",
-            "profile_photo" => "required|image",
-            "landline" => "string",
-            "facebook" => "string",
-            "twitter" => "string",
-            "linkedin" => "string",
-            "google_plus" => "string",
-            "instagram" => "string",
-            "tumbler" => "string",
         ]);
 
         try {
