@@ -72,14 +72,7 @@ class AuthenticationService
 
     public function me(): User
     {
-        $rolePriviledgeService = App::make(RoleAndPriviledgeService::class);
-
         $user = auth()->user();
-
-        $returnVal = $rolePriviledgeService->user($user)->getPermissionAndRoleList();
-        unset($user->permisisons);
-        unset($user->roles);
-        [$user->permissions, $user->roles]  = $returnVal;
         return $user;
     } //end method me
 }//end class AuthenticationService
